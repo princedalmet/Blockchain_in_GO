@@ -21,16 +21,26 @@ Transaction model
 
 func main() {
 
-  node := Node{Address: "localhost:3000"}
-  node.Start()
-  node.ConnectToPeer("localhost:3001")
-  bc := InitBlockchain("my-address")
-  tx := CreateTransaction(from, to, amount, privKey)
-  node.Broadcast(Message{Type: "tx", Data: tx.Serialize()})
-  stakingManager.AddStake("my-address", 100)
-  if stakingManager.SelectValidator() == "my-address" {
-  newBlock := CreateBlock(bc.Blocks[len(bc.Blocks)-1].Hash, txs)
-  bc.AddBlock(newBlock)
-  node.Broadcast(Message{Type: "block", Data: newBlock.Serialize()})
+    node := Node{Address: "localhost:3000"}
+    
+    node.Start()
+    
+    node.ConnectToPeer("localhost:3001")
+    
+    bc := InitBlockchain("my-address")
+    
+    tx := CreateTransaction(from, to, amount, privKey)
+    
+    node.Broadcast(Message{Type: "tx", Data: tx.Serialize()})
+    
+    stakingManager.AddStake("my-address", 100)
+    
+    if stakingManager.SelectValidator() == "my-address" {
+    
+    newBlock := CreateBlock(bc.Blocks[len(bc.Blocks)-1].Hash, txs)
+    
+    bc.AddBlock(newBlock)
+    
+    node.Broadcast(Message{Type: "block", Data: newBlock.Serialize()})
   
   } }
